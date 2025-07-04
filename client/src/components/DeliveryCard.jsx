@@ -3,10 +3,11 @@ import api from '../api/api';
 import toast from 'react-hot-toast';
 import {
   FaUser, FaMapMarkerAlt, FaClipboard,
-  FaEnvelope, FaTruck, FaCheckCircle
+  FaEnvelope, FaTruck, FaCheckCircle,
+  FaComment, FaTimes
 } from "react-icons/fa";
 import ConfirmationModal from './ConfirmationModal';
-import ChatRoom from './ChatRoom'; // ✅ Import ChatRoom
+import ChatRoom from './ChatRoom';
 
 const statusBadgeStyles = {
   Pending: "bg-yellow-100 text-yellow-800",
@@ -21,13 +22,16 @@ const DeliveryCard = ({
   showStatusActions,
   onStatusChange,
   onAcceptSuccess,
-  currentUser, // ✅ Pass this from parent (Driver or Customer info)
+  currentUser,
 }) => {
   const [loading, setLoading] = useState(false);
   const [showPickupConfirmation, setShowPickupConfirmation] = useState(false);
   const [showOtpPrompt, setShowOtpPrompt] = useState(false);
   const [otpInput, setOtpInput] = useState('');
   const [pendingStatus, setPendingStatus] = useState(null);
+   const [showChat, setShowChat] = useState(
+    ["Accepted", "In-Transit"].includes(delivery.status)
+  );
 
   const handleStatusUpdate = async (newStatus, confirmed = false) => {
     try {
@@ -125,6 +129,11 @@ const DeliveryCard = ({
     }
   };
 
+  const toggleChat = () => {
+    setShowChat(!showChat);
+  };
+  
+
   return (
     <div className="bg-white shadow-md rounded-xl border p-5 mb-6">
       <div className="flex justify-between items-center mb-3">
@@ -191,6 +200,28 @@ const DeliveryCard = ({
             <FaCheckCircle className="inline mr-2" /> Mark as Completed
           </button>
         )}
+
+        {/* Live Chat Button */}
+       {["Accepted", "In-Transit"].includes(delivery.status) && (
+        <button
+          onClick={toggleChat}
+          className={`w-full py-2 rounded-md font-medium transition flex items-center justify-center gap-2 ${
+            showChat 
+              ? "bg-gray-200 text-gray-800 hover:bg-gray-300"
+              : "bg-blue-500 text-white hover:bg-blue-600"
+          }`}
+        >
+          {showChat ? (
+            <>
+              <FaTimes /> Close Chat
+            </>
+          ) : (
+            <>
+              <FaComment /> Live Chat
+            </>
+          )}
+        </button>
+      )}
       </div>
 
       {delivery.status === "Completed" && delivery.feedback && (
@@ -206,8 +237,8 @@ const DeliveryCard = ({
         </div>
       )}
 
-      {/* ✅ Real-Time Chat */}
-      {["Accepted", "In-Transit"].includes(delivery.status) && (
+      {/* Real-Time Chat (now conditionally rendered) */}
+      {showChat && ["Accepted", "In-Transit"].includes(delivery.status) && (
         <div className="mt-5">
           <ChatRoom deliveryId={delivery._id} currentUser={currentUser} />
         </div>

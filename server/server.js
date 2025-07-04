@@ -73,10 +73,13 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const authRoutes = require('./routes/authRoutes');
 const deliveryRoutes = require('./routes/deliveryRoutes');
 const chatRoutes = require('./routes/chatRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+
 app.use('/api/auth', authRoutes);
 app.use('/api/deliveries', deliveryRoutes);
 app.use('/api/chat', chatRoutes);
 
+app.use('/api/admin', adminRoutes);
 // ✅ Home route
 app.get('/', (req, res) => {
   res.send('QuickDeliver Lite API is running');

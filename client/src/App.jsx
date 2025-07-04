@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import Profile from "./components/Profile";
 import CustomerDashboard from "./pages/CustomerDashboard";
 import DriverDashboard from "./pages/DriverDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import EditProfile from "./components/EditProfile";
 import ChangePassword from "./components/ChangePassword";
@@ -28,21 +29,25 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await api.get("/auth/me");
-        setUser(res.data.user);
-      } catch (err) {
-        console.log("❌ Not logged in");
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUser();
-  }, []);
+ useEffect(() => {
+  const fetchUser = async () => {
+    try {
+      const res = await api.get("/auth/me", {
+        withCredentials: true, // Include cookies
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token') || ''}` 
+        }
+      });
+      setUser(res.data.user);
+    } catch (err) {
+      console.log("Not logged in");
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchUser();
+}, []);
 
   const handleLogout = async () => {
     await api.post("/auth/logout");
@@ -68,17 +73,32 @@ export default function App() {
           <Route path="/settings" element={<EditProfile user={user} setUser={setUser} />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute user={user}>
-                {user?.role === "driver" ? (
-                  <DriverDashboard user={user} />
-                ) : (
-                  <CustomerDashboard user={user} />
-                )}
-              </ProtectedRoute>
-            }
-          />
+    path="/dashboard"
+    element={
+      <ProtectedRoute user={user}>
+        {user?.role === "admin" ? (
+          <Navigate to="/admin/dashboard" replace />
+        ) : user?.role === "driver" ? (
+          <DriverDashboard user={user} />
+        ) : (
+          <CustomerDashboard user={user} />
+        )}
+      </ProtectedRoute>
+    }
+  />
+
+   <Route
+    path="/admin/dashboard"
+    element={
+      <ProtectedRoute user={user}>
+        {user?.role === "admin" ? (
+          <AdminDashboard user={user} />
+        ) : (
+          <Navigate to="/dashboard" replace />
+        )}
+      </ProtectedRoute>
+    }
+  />
             <Route
     path="/order"
     element={

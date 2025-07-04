@@ -3,7 +3,7 @@ import api from "../api/api";
 import { toast } from "react-toastify";
 import DeliveryDetailsModal from "./modals/DeliveryDetailsModal";
 import CancelConfirmationModal from "./modals/CancelConfirmationModal";
-import DeliveryCard from "./DeliveryCard";
+import DeliveryCard from "./modals/DeliveryCard";
 
 const statuses = ["All", "Pending", "Accepted", "In-Transit", "Completed"];
 
@@ -162,15 +162,12 @@ const DeliveryList = ({ user }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-4">
           {filteredDeliveries.map((delivery) => (
             <DeliveryCard
-  key={delivery._id}
-  delivery={delivery}
-  showAcceptButton={false}
-  showStatusActions={['Accepted', 'In-Transit'].includes(delivery.status)}
-  onStatusChange={fetchDeliveries}
-  onAcceptSuccess={fetchDeliveries}
-  currentUser={user}  
-/>
-
+              key={delivery._id}
+              delivery={delivery}
+              onCardClick={openDeliveryDetails}
+              onCancelClick={openCancelConfirmation}
+              currentUser={user} 
+            />
           ))}
         </div>
       )}
