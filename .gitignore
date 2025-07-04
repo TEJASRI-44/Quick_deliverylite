@@ -1,0 +1,23 @@
+# Ignore environment files
+.env
+
+# Ignore dependencies
+node_modules/
+
+# Ignore build files
+dist/
+build/
+
+# Ignore log files
+*.log
+
+# Ignore OS files
+.DS_Store
+
+# Ignore Vite cache
+.vite/
+
+# Ignore .env backups or examples
+.env.local
+.env.development
+.env.production
