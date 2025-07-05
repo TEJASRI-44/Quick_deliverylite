@@ -6,7 +6,7 @@ const router = express.Router();
 // Registration route
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, phone, role } = req.body;
 
     // Password validation
     if (!password || password.length < 8) {
@@ -34,10 +34,11 @@ router.post('/register', async (req, res) => {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
+    // Create user with phone included
     const user = await User.create({
       name,
       email,
+      phone,
       password: hashedPassword,
       role,
     });
@@ -48,10 +49,10 @@ router.post('/register', async (req, res) => {
 
     res.status(201).json({ user: userObj });
   } catch (err) {
+    console.error("Registration error:", err);
     res.status(500).json({ error: "Server error during registration." });
   }
 });
 
-// (You can add login and logout routes here as well)
-
 module.exports = router;
+

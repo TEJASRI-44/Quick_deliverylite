@@ -56,7 +56,10 @@ const DriverDashboard = ({ user }) => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-tr from-gray-100 to-blue-100 px-4 py-8">
+    <div
+      className="min-h-screen w-full px-4 py-8"
+      style={{ background: "linear-gradient(to right top, #eef2f3, #8ec5fc)" }}
+    >
       <div className="w-full max-w-screen-xl mx-auto">
         <h2 className="text-3xl font-bold text-center text-indigo-700 mb-6">
           Driver Dashboard

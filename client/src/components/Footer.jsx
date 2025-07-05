@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <footer className="bg-black text-white">
-      <div className="bg-slate-900 text-center py-4 text-sm">
+      {/* <div className="bg-slate-900 text-center py-4 text-sm">
         Are you a{" "}
         <Link to="/register" className="text-blue-400 underline hover:text-yellow-300">Customer</Link>{" "}
         or{" "}
         <Link to="/register" className="text-blue-400 underline hover:text-yellow-300">Driver</Link>
         ? Join now and start delivering!
-      </div>
+      </div> */}
 
       <div className="bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500 shadow-lg">
         <div className="w-full mx-auto max-w-screen-xl px-4 py-6 flex flex-col md:flex-row items-center justify-between">
