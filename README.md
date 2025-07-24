@@ -144,11 +144,4 @@ Include screenshots of the following (optional):
 - 🧑‍✈️ Driver Dashboard  
 - 🛠 Admin Panel  
 
----
 
-## ✨ Contributors
-
-- [@momintaj-shaik-4](https://github.com/momintaj-shaik-4)
-- [@DarsiDharani](https://github.com/DarsiDharani)
-
----
