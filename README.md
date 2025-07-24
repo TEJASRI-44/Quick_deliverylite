@@ -128,20 +128,6 @@ App will be available at: [http://localhost:5173](http://localhost:5173)
 - 💳 Payment integration for premium deliveries  
 - 📱 Progressive Web App (PWA) support  
 
----
 
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-## 📷 Screenshots
-
-Include screenshots of the following (optional):
-- 🔐 Login Page  
-- 🚚 Delivery Request Form  
-- 🧑‍✈️ Driver Dashboard  
-- 🛠 Admin Panel  
 
 
